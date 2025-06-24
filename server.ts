@@ -2,8 +2,14 @@ import express from "express";
 import cors from "cors";
 
 const app = express();
+app.use(express.json());
 app.use(cors());
 const port = 4000;
+
+type Todo = {
+  id: number;
+  text: string;
+};
 
 const todos = [
   { id: "1", text: "Buy Milk" },
@@ -18,6 +24,15 @@ const todos = [
 ];
 
 app.get("/todos", (req, res) => {
+  res.json(todos);
+});
+
+app.post("/todos", (req, res) => {
+  let newTodo = {
+    id: (todos.length + 1).toString(),
+    text: req.body.text,
+  };
+  todos.push(newTodo);
   res.json(todos);
 });
 
