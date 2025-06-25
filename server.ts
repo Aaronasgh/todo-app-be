@@ -4,7 +4,8 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = 4000;
+
+const port = process.env.PORT || 4000;
 
 let nextId = 1;
 
@@ -34,6 +35,6 @@ app.delete("/todos", (req, res) => {
   res.json(todos);
 });
 
-app.listen(process.env.PORT || 4000, () => {
-  console.log("Server running");
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
