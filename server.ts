@@ -6,22 +6,14 @@ app.use(express.json());
 app.use(cors());
 const port = 4000;
 
+let nextId = 1;
+
 type Todo = {
   id: number;
   text: string;
 };
 
-const todos = [
-  { id: "1", text: "Buy Milk" },
-  { id: "2", text: "Do Laundry" },
-  { id: "3", text: "Clean Room" },
-  { id: "4", text: "Workout" },
-  { id: "5", text: "Go Swimming" },
-  { id: "6", text: "Do Homework" },
-  { id: "7", text: "Call Nick" },
-  { id: "8", text: "Water Plants" },
-  { id: "9", text: "Study" },
-];
+const todos = [] as Todo[];
 
 app.get("/todos", (req, res) => {
   res.json(todos);
@@ -29,10 +21,16 @@ app.get("/todos", (req, res) => {
 
 app.post("/todos", (req, res) => {
   let newTodo = {
-    id: (todos.length + 1).toString(),
+    id: nextId++,
     text: req.body.text,
   };
   todos.push(newTodo);
+  res.json(todos);
+});
+
+app.delete("/todos", (req, res) => {
+  const filteredTodos = todos.filter((todo) => !req.body.includes(todo.id));
+  todos.splice(0, todos.length, ...filteredTodos);
   res.json(todos);
 });
 
