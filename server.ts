@@ -34,6 +34,6 @@ app.delete("/todos", (req, res) => {
   res.json(todos);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(process.env.PORT || 4000, () => {
+  console.log("Server running");
 });
