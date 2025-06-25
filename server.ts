@@ -21,7 +21,7 @@ app.get("/todos", (req, res) => {
 
 app.post("/todos", (req, res) => {
   let newTodo = {
-    id: nextId++,
+    id: nextId++, //Ensures unique and continuus IDs
     text: req.body.text,
   };
   todos.push(newTodo);
@@ -29,8 +29,8 @@ app.post("/todos", (req, res) => {
 });
 
 app.delete("/todos", (req, res) => {
-  const filteredTodos = todos.filter((todo) => !req.body.includes(todo.id));
-  todos.splice(0, todos.length, ...filteredTodos);
+  const filteredTodos = todos.filter((todo) => !req.body.includes(todo.id)); //Keep Todos whose IDs are not in the request body. Filter out Todos to be deleted.
+  todos.splice(0, todos.length, ...filteredTodos); //Remove all current Todos and add the newly filtered ones
   res.json(todos);
 });
 
